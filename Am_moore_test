@@ -1,0 +1,32 @@
+`include"Am_moore.v"
+module moore_1101_tb;
+  reg clk,reset,in;
+  wire out;
+  
+  moore_1101 uut(in,clk,reset,out);
+  
+  initial begin
+    $dumpfile("moore_1101_tb.vcd");
+     $dumpvars(0,moore_1101_tb);
+  end
+  
+  initial begin
+  clk=0;
+    #200 $finish;
+     end
+   always #5 clk=~clk;
+  initial begin
+	reset=1;
+    #2 reset=0;
+    #150;
+  end
+  initial begin
+    in=1;
+    #10 in=1; #10 in=1; #10 in=1; #10 in=0; #10 in=1;
+    #10 in=0; #10 in=1; #10 in=1;#10 in=0; #10 in=1;
+    #10 in=0;#10 in=0; #10 in=0; #10 in=1; #10 in=1;
+    #10 in=0; #10 in=1;
+    #10;
+    
+  end
+endmodule
