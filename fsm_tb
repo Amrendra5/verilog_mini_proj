@@ -1,0 +1,48 @@
+`include "fsm.v"
+module fsm_tb;
+  reg  clk, a;
+  wire out1, out2;
+  fsm FSM(.clk(clk),
+          .a(a),
+          .out1(out1),
+          .out2(out2));
+  initial begin
+    $dumpfile("fsm_tb.vcd");
+    $dumpvars(1, fsm_tb);
+
+    clk = 0;
+    a = 0;
+    $display("Initial out1: %0h, out2: %0h",
+      out1, out2);
+
+    toggle_clk;
+    $display("IDLE out1: %0h, out2: %0h",
+      out1, out2);
+    
+    a = 1;
+    toggle_clk;
+    $display("STATE_1 out1: %0h, out2: %0h",
+      out1, out2);
+
+    toggle_clk;
+    $display("FINAL out1: %0h, out2: %0h",
+      out1, out2);
+
+    toggle_clk;
+    $display("FINAL out1: %0h, out2: %0h",
+      out1, out2);
+    
+    a = 0;
+    toggle_clk;
+    $display("IDLE out1: %0h, out2: %0h",
+      out1, out2);
+  end
+  
+  task toggle_clk;
+    begin
+      #10 clk = ~clk;
+      #10 clk = ~clk;
+    end
+  endtask
+  
+endmodule
